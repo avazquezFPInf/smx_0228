@@ -1,14 +1,15 @@
-const navigationCss = location.pathname.includes('/AEA1/') ? '../css/navigation.css' : 'css/navigation.css';
+const navigationCss = location.pathname.includes('/AEA1/') || location.pathname.includes('/AEA2/') ? '../css/navigation.css' : 'css/navigation.css';
 if (!document.querySelector('link[data-navigation-css]')) document.head.insertAdjacentHTML('beforeend', `<link rel="stylesheet" href="${navigationCss}" data-navigation-css>`);
 
 function renderSidebar() {
-  const inAea = location.pathname.includes('/AEA1/');
+  const inAea = location.pathname.includes('/AEA1/') || location.pathname.includes('/AEA2/');
   const root = inAea ? '../' : '';
   const current = location.pathname.split('/').pop() || 'index.html';
   const active = page => current === page ? ' active' : '';
   const sidebar = document.querySelector('.sidebar') || document.createElement('aside');
   sidebar.className = 'sidebar';
   sidebar.innerHTML = `<a class="brand" href="${root}index.html"><span>0228</span> Aplicaciones web</a><nav aria-label="Navegación principal"><a class="nav-home${!inAea ? ' active' : ''}" href="${root}index.html">Inicio</a><a class="nav-aea${inAea && current === 'index.html' ? ' active' : ''}" href="${root}AEA1/index.html">AEA 1 · Introducción</a><div class="nav-tree"><a class="nav-major${active('juego.html')}" href="${root}AEA1/juego.html">1. Juego de cronología</a><a class="nav-major${active('introduccion.html')}" href="${root}AEA1/introduccion.html">2. Introducción al tema</a><span class="nav-hint">Aplicaciones web</span><a class="nav-major${active('proyecto.html')}" href="${root}AEA1/proyecto.html">3. Práctica: crea un evento</a><div class="nav-children"><a class="${active('carpeta.html')}" href="${root}AEA1/carpeta.html">a. Carpeta compartida</a><a class="${active('documento.html')}" href="${root}AEA1/documento.html">b. Documento del proyecto</a><a class="${active('presupuesto.html')}" href="${root}AEA1/presupuesto.html">c. Presupuesto</a><a class="${active('inscripcion.html')}" href="${root}AEA1/inscripcion.html">d. Formulario de inscripción</a><a class="${active('presentacion.html')}" href="${root}AEA1/presentacion.html">e. Presentación final</a><a class="${active('site.html')}" href="${root}AEA1/site.html">f. Web del evento</a></div></div></nav>`;
+  sidebar.querySelector('nav').insertAdjacentHTML('beforeend', '<a class="nav-aea" href="' + root + 'AEA2/index.html">AEA 2 · Gestores de archivos web</a><div class="nav-tree"><a class="nav-major" href="' + root + 'AEA2/pt2-1.html">1. Drive y Dropbox</a><span class="nav-hint">Pt2.1 · 6 h</span><span class="nav-wip">2. Nextcloud · 8 h</span><span class="nav-wip">3. Dotació.cat · 4 h</span><span class="nav-wip">4. Alojamiento cloud · 4 h</span></div>');
   if (!sidebar.parentElement) document.body.prepend(sidebar);
 }
 renderSidebar();
