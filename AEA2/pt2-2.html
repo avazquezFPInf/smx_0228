@@ -1,0 +1,165 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Pt2.2 Nextcloud | AEA 2</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <main>
+    <a class="back-link" href="index.html">← Volver a AEA 2</a>
+    <header class="page-header compact">
+      <p class="eyebrow">Pt2.2 · 8 horas</p>
+      <h1>Nextcloud: tu propio servicio de archivos</h1>
+      <p class="lead">Instalarás y administrarás un espacio privado para el equipo que organiza tu evento: usuarios, grupos, carpetas, permisos, versiones y enlaces.</p>
+    </header>
+
+    <section class="delivery-block">
+      <div class="block-label">Antes de empezar</div>
+      <h2>Documento de evidencias Pt2.2</h2>
+      <p>Haz una copia del documento de evidencias y complétalo a medida que realizas la práctica. En cada apartado no basta con añadir una captura.</p>
+      <div class="document-spec">
+        <h3>Para cada evidencia responde</h3>
+        <ol>
+          <li><strong>Qué es:</strong> explica el concepto en dos o tres líneas.</li>
+          <li><strong>Qué he hecho:</strong> resume las acciones que has realizado.</li>
+          <li><strong>Evidencia:</strong> añade una captura legible que demuestre el resultado.</li>
+          <li><strong>Comprobación:</strong> indica cómo sabes que funciona, o qué incidencia apareció y cómo la resolviste.</li>
+        </ol>
+      </div>
+      <p class="source-note">El enlace al documento guía se añadirá aquí antes de comenzar la práctica.</p>
+    </section>
+
+    <section class="theory-block">
+      <div class="block-label">Qué es Nextcloud</div>
+      <h2>Un Drive propio</h2>
+      <p>Nextcloud es una plataforma de almacenamiento y colaboración que instalamos y administramos nosotros. Ofrece funciones parecidas a Drive o Dropbox —archivos, carpetas, usuarios, permisos, versiones y enlaces—, pero no depende de una cuenta de Google o Dropbox.</p>
+      <p>Para funcionar necesita un servidor web, PHP, una base de datos y espacio de almacenamiento. En esta práctica cada alumno tendrá su propia instalación en Ubuntu, ya sea en una máquina física o en una máquina virtual.</p>
+      <p><strong>Importante:</strong> Nextcloud sirve para gestionar archivos y colaborar de forma privada. No será el lugar donde publiquemos la web HTML del evento: eso se hará en Pt2.3 con Dotació.cat.</p>
+    </section>
+
+    <section class="theory-block">
+      <div class="block-label">Qué aprenderás</div>
+      <h2>Administrar un servicio, no solo usarlo</h2>
+      <div class="criteria-grid">
+        <article class="criteria-card"><h3>Servidor</h3><p>Identificarás el servidor web, PHP, la base de datos y Nextcloud.</p></article>
+        <article class="criteria-card"><h3>Usuarios</h3><p>Crearás usuarios, grupos y permisos adaptados al equipo del evento.</p></article>
+        <article class="criteria-card"><h3>Archivos</h3><p>Comprobarás sincronización, versiones, enlaces y accesos autorizados.</p></article>
+      </div>
+    </section>
+
+    <section class="exercise-block">
+      <div class="block-label">Paso 1</div>
+      <h2>Prepara Ubuntu y el servidor</h2>
+      <p>Trabaja en tu instalación individual de Ubuntu. Puede ser una máquina virtual o una instalación física, pero todo el trabajo debe quedar en tu propia máquina.</p>
+      <ol>
+        <li>Actualiza los paquetes del sistema.</li>
+        <li>Instala Apache, MariaDB, PHP y los módulos necesarios para Nextcloud.</li>
+        <li>Activa los servicios y comprueba que Apache responde al abrir <code>http://localhost</code>.</li>
+      </ol>
+      <section class="code-block">
+        <div class="block-label">Terminal</div>
+        <pre><code>sudo apt update
+sudo apt install apache2 mariadb-server libapache2-mod-php php-mysql php-gd php-curl php-zip php-xml php-mbstring php-intl php-bcmath unzip wget -y
+sudo systemctl enable --now apache2 mariadb</code></pre>
+      </section>
+      <p><strong>Evidencias:</strong> captura de <code>http://localhost</code> y explicación de qué función cumple Apache, PHP y MariaDB.</p>
+    </section>
+
+    <section class="exercise-block">
+      <div class="block-label">Paso 2</div>
+      <h2>Crea la base de datos e instala Nextcloud</h2>
+      <ol>
+        <li>Crea una base de datos llamada <code>nextcloud</code> y un usuario exclusivo para ella.</li>
+        <li>Descarga Nextcloud, descomprímelo en <code>/var/www/</code> y asigna la propiedad al usuario <code>www-data</code>.</li>
+        <li>Activa los módulos de Apache necesarios y reinicia el servicio.</li>
+        <li>Abre <code>http://localhost/nextcloud</code> y completa el asistente de instalación.</li>
+        <li>Crea el usuario administrador. Usa una contraseña segura, pero no la escribas ni la muestres en las capturas.</li>
+      </ol>
+      <section class="code-block">
+        <div class="block-label">Terminal</div>
+        <pre><code>sudo mysql
+CREATE DATABASE nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE USER 'ncadmin'@'localhost' IDENTIFIED BY 'TU_CONTRASENA_SEGURA';
+GRANT ALL PRIVILEGES ON nextcloud.* TO 'ncadmin'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;
+
+cd /tmp
+wget https://download.nextcloud.com/server/releases/latest.zip
+unzip latest.zip
+sudo mv nextcloud /var/www/
+sudo chown -R www-data:www-data /var/www/nextcloud
+sudo a2enmod rewrite headers env dir mime
+sudo systemctl restart apache2</code></pre>
+      </section>
+      <p><strong>Evidencias:</strong> captura de la pantalla principal de Nextcloud y resumen de qué datos se han configurado durante la instalación.</p>
+    </section>
+
+    <section class="exercise-block">
+      <div class="block-label">Paso 3</div>
+      <h2>Crea el equipo del evento</h2>
+      <p>Desde la administración de Nextcloud crea los grupos <strong>Organización</strong> y <strong>Comunicación</strong>. Crea, como mínimo, los usuarios de prueba <code>organizacion</code>, <code>comunicacion</code> e <code>invitado</code>. No reutilices tu contraseña personal para estas cuentas.</p>
+      <p>Explica en el documento de evidencias la diferencia entre <strong>usuario</strong>, <strong>grupo</strong> y <strong>permiso</strong>.</p>
+      <p><strong>Evidencias:</strong> captura de los grupos y usuarios creados, y tabla que relacione cada usuario con su grupo y función dentro del evento.</p>
+    </section>
+
+    <section class="exercise-block">
+      <div class="block-label">Paso 4</div>
+      <h2>Organiza las carpetas y asigna permisos</h2>
+      <p>Con el usuario administrador crea la carpeta <code>Evento</code> y dentro las siguientes subcarpetas:</p>
+      <div class="document-spec">
+        <ul class="checklist">
+          <li><strong>Cartelería:</strong> Comunicación puede editar; Organización solo puede consultar.</li>
+          <li><strong>Programa:</strong> ambos grupos pueden editar.</li>
+          <li><strong>Documentación interna:</strong> Organización puede editar; Comunicación solo puede consultar.</li>
+          <li><strong>Inscripciones:</strong> solo Organización puede editar y consultar.</li>
+        </ul>
+      </div>
+      <p>Comparte cada carpeta con los grupos correspondientes. Después abre una ventana privada e inicia sesión con los usuarios de prueba para comprobar los permisos.</p>
+      <p><strong>Evidencias:</strong> árbol de carpetas, configuración de una carpeta compartida, una prueba de acceso permitido y una prueba de acceso denegado.</p>
+    </section>
+
+    <section class="exercise-block">
+      <div class="block-label">Paso 5</div>
+      <h2>Versiones y enlaces seguros</h2>
+      <ol>
+        <li>Entra como <code>comunicacion</code>, crea un archivo de texto o sube un cartel a <code>Cartelería</code> y haz tres cambios visibles.</li>
+        <li>Consulta el historial de versiones y restaura una versión anterior.</li>
+        <li>Genera un enlace público para compartir el archivo o una carpeta.</li>
+        <li>Configura contraseña y fecha de caducidad en el enlace.</li>
+        <li>Comprueba el enlace desde una ventana privada.</li>
+      </ol>
+      <p><strong>Evidencias:</strong> historial de versiones, enlace configurado sin mostrar su contraseña y comprobación desde una ventana privada. Explica para qué sirve cada medida de seguridad.</p>
+    </section>
+
+    <section class="exercise-block">
+      <div class="block-label">Paso 6</div>
+      <h2>Sincroniza y organiza una tarea del evento</h2>
+      <ol>
+        <li>Instala el cliente de escritorio de Nextcloud en Ubuntu: <code>sudo apt install nextcloud-desktop -y</code>.</li>
+        <li>Configura el cliente para sincronizar únicamente la carpeta <code>Evento</code>, no todo el contenido.</li>
+        <li>Crea o activa una herramienta de trabajo de Nextcloud, como Tareas o Calendario.</li>
+        <li>Añade tres tareas o eventos relacionados con tu evento: preparar cartel, revisar programa y publicar información.</li>
+      </ol>
+      <p><strong>Evidencias:</strong> carpeta local sincronizada, archivo visible tanto localmente como en Nextcloud web y lista de tareas o calendario. Explica qué ventaja tiene sincronizar solo una carpeta concreta.</p>
+    </section>
+
+    <section class="delivery-block">
+      <div class="block-label">Entrega</div>
+      <h2>Comprobación final</h2>
+      <ul class="checklist">
+        <li>Nextcloud funciona en <code>http://localhost/nextcloud</code>.</li>
+        <li>Existen usuarios, grupos y carpetas del evento.</li>
+        <li>Has probado al menos un permiso permitido y uno denegado.</li>
+        <li>Has recuperado una versión anterior y creado un enlace protegido.</li>
+        <li>Has configurado la sincronización de una carpeta concreta.</li>
+        <li>El documento de evidencias contiene explicaciones además de capturas.</li>
+      </ul>
+      <p><strong>Conclusión:</strong> explica en 6 a 8 líneas qué diferencia hay entre Drive, Dropbox, Nextcloud y el alojamiento web donde se publicará la web del evento.</p>
+    </section>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>
