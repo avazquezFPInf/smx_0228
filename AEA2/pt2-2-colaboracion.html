@@ -1,0 +1,97 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>03 Colaboración segura | AEA 2</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <main>
+    <a class="back-link" href="pt2-2.html">← Volver a Nextcloud</a>
+
+    <header class="page-header compact">
+      <p class="eyebrow">Pt2.2 · Nextcloud</p>
+      <h1>03 Colaboración segura</h1>
+      <p class="lead">Comparte archivos, recupera cambios y sincroniza solo lo necesario sin perder el control de la información.</p>
+    </header>
+
+    <section class="theory-block">
+      <div class="block-label">Idea clave</div>
+      <h2>Colaborar no es abrirlo todo</h2>
+      <p>Una colaboración segura mantiene tres controles: saber qué se ha cambiado, decidir quién puede entrar y retirar el acceso cuando ya no hace falta. Nextcloud ofrece herramientas para cada uno de ellos.</p>
+      <div class="security-controls">
+        <article><span class="control-icon">↶</span><h3>Versiones</h3><p>Permiten recuperar un archivo anterior si alguien se equivoca, sin guardar copias con nombres confusos.</p></article>
+        <article><span class="control-icon">🔑</span><h3>Contraseña</h3><p>Añade una segunda barrera: el enlace por sí solo no permite abrir el recurso.</p></article>
+        <article><span class="control-icon">⌛</span><h3>Caducidad</h3><p>Marca cuándo deja de funcionar un enlace. Evita accesos externos que se mantienen indefinidamente.</p></article>
+        <article><span class="control-icon">↔</span><h3>Sincronización</h3><p>Mantiene la misma versión del archivo en la web y en el ordenador, en las carpetas elegidas.</p></article>
+      </div>
+    </section>
+
+    <section class="theory-block safety-scenario">
+      <div class="block-label">Piensa antes de compartir</div>
+      <h2>Elige el tipo de acceso adecuado</h2>
+      <div class="sharing-paths">
+        <article><h3>¿Trabaja dentro del equipo?</h3><p>Comparte con su <strong>grupo</strong>. Mantiene los permisos que diseñaste en el paso anterior.</p><span>Ejemplo: Comunicación edita Cartelería.</span></article>
+        <article><h3>¿Necesita recibir un recurso puntual?</h3><p>Crea un <strong>enlace</strong> con contraseña y fecha de caducidad.</p><span>Ejemplo: enviar un cartel final a una entidad colaboradora.</span></article>
+        <article><h3>¿No necesita acceder?</h3><p><strong>No compartas</strong> el archivo. Tener un enlace disponible no es necesario “por si acaso”.</p><span>Ejemplo: Inscripciones o documentación interna.</span></article>
+      </div>
+      <p class="source-note">Un enlace público no convierte el archivo en “público para siempre”: la persona que lo crea sigue siendo responsable de poner protección y eliminarlo cuando termine su uso.</p>
+    </section>
+
+    <section class="exercise-block">
+      <div class="block-label">Paso 5 · versiones y enlaces</div>
+      <h2>Recupera un cambio y comparte un cartel de forma segura</h2>
+      <p class="step-intro"><strong>Qué vas a conseguir:</strong> comprobar que una versión permite deshacer un error y que un enlace temporal puede enviar un archivo sin dar acceso a todas las carpetas del evento.</p>
+
+      <div class="action-list">
+        <article><span>1</span><div><h3>Crea un recurso de prueba</h3><p>Entra como <code>comunicacion</code>. En <code>Cartelería</code>, crea un archivo de texto llamado <code>cartel-prueba.txt</code> o sube una imagen de prueba.</p></div></article>
+        <article><span>2</span><div><h3>Genera versiones</h3><p>Haz tres cambios fáciles de reconocer, por ejemplo: “borrador”, “revisado” y “versión final”. Guarda después de cada cambio.</p></div></article>
+        <article><span>3</span><div><h3>Recupera una versión anterior</h3><p>Abre el menú de los tres puntos del archivo y entra en <strong>Versiones</strong>. Restaura “revisado” y comprueba que el contenido ha vuelto a ese estado.</p></div></article>
+        <article><span>4</span><div><h3>Crea un enlace protegido</h3><p>Comparte el archivo mediante enlace. Activa contraseña y fecha de caducidad. No uses una contraseña real ni la muestres en la captura.</p></div></article>
+        <article><span>5</span><div><h3>Comprueba desde fuera</h3><p>Abre una ventana privada, pega el enlace y verifica que pide la contraseña. Después comprueba que permite abrir solamente ese archivo, no toda la carpeta.</p></div></article>
+      </div>
+
+      <div class="security-check">
+        <h3>Prueba de seguridad</h3>
+        <p>El enlace debe pedir contraseña. Si no lo hace, revisa la configuración antes de continuar. La fecha de caducidad puede no verse en la ventana privada: se demuestra desde la pantalla de compartición.</p>
+      </div>
+
+      <div class="evidence-callout">
+        <h3>Qué debes demostrar</h3>
+        <p>Añade: una captura del historial de versiones, otra de la configuración del enlace sin mostrar la contraseña y otra de la ventana privada pidiéndola. Explica para qué sirven versiones, contraseña y caducidad.</p>
+      </div>
+    </section>
+
+    <section class="exercise-block">
+      <div class="block-label">Paso 6 · sincronización y organización</div>
+      <h2>Trabaja desde el escritorio sin copiar archivos a mano</h2>
+      <p class="step-intro"><strong>Qué vas a conseguir:</strong> tener disponible la carpeta del evento en el navegador y en el escritorio, sincronizando únicamente la información con la que vas a trabajar.</p>
+
+      <div class="sync-diagram" aria-label="Sincronización entre la carpeta local y Nextcloud">
+        <div><strong>Carpeta local</strong><span>en tu Ubuntu</span></div><b>↔</b><div><strong>Nextcloud</strong><span>en el navegador</span></div>
+      </div>
+
+      <div class="action-list">
+        <article><span>1</span><div><h3>Instala el cliente de escritorio</h3><p>En la terminal ejecuta <code>sudo apt install nextcloud-desktop -y</code>. Abre la aplicación y conéctala a <code>http://localhost/nextcloud</code> con una cuenta de prueba.</p></div></article>
+        <article><span>2</span><div><h3>Elige qué sincronizar</h3><p>Durante la configuración, selecciona únicamente <code>Evento</code>. No es necesario copiar todas las carpetas personales ni todo el contenido del servidor a ese ordenador.</p></div></article>
+        <article><span>3</span><div><h3>Haz una comprobación doble</h3><p>Crea o modifica un archivo dentro de la carpeta local sincronizada. Espera a que el cliente indique que está actualizado y comprueba que aparece en la web.</p></div></article>
+        <article><span>4</span><div><h3>Organiza el siguiente trabajo</h3><p>Desde el selector de aplicaciones de Nextcloud, activa <strong>Tareas</strong> o <strong>Calendario</strong>. Crea: preparar cartel, revisar programa y publicar información. Si la aplicación no aparece, anota la incidencia y consulta antes de instalar apps adicionales.</p></div></article>
+      </div>
+
+      <div class="evidence-callout">
+        <h3>Qué debes demostrar</h3>
+        <p>Añade una captura de la carpeta local sincronizada, otra del mismo archivo en la web y otra de las tres tareas o eventos. Explica por qué solo sincronizas <code>Evento</code>.</p>
+      </div>
+    </section>
+
+    <section class="delivery-block">
+      <div class="block-label">Cierre de Pt2.2</div>
+      <h2>Conclusión</h2>
+      <p>En 6 a 8 líneas, explica la diferencia entre usar Drive o Dropbox, administrar Nextcloud y publicar una web en un alojamiento. Incluye una decisión concreta sobre cuándo usarías cada opción para el evento.</p>
+      <a class="button" href="pt2-2.html">Volver al itinerario</a>
+    </section>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>

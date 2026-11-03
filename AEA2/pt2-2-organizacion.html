@@ -1,0 +1,116 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>02 Configuración del equipo | AEA 2</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <main>
+    <a class="back-link" href="pt2-2.html">← Volver a Nextcloud</a>
+
+    <header class="page-header compact">
+      <p class="eyebrow">Pt2.2 · Nextcloud</p>
+      <h1>02 Configuración del equipo</h1>
+      <p class="lead">Convierte una instalación vacía en el espacio de trabajo ordenado y seguro de un evento.</p>
+    </header>
+
+    <section class="theory-block">
+      <div class="block-label">Idea clave</div>
+      <h2>De archivos sueltos a un equipo organizado</h2>
+      <p>Nextcloud no decide quién puede ver o modificar un archivo: lo decide quien lo administra. En esta práctica crearás una organización sencilla en la que cada persona tiene una cuenta, cada cuenta pertenece a un grupo y cada grupo recibe los permisos que necesita.</p>
+      <div class="permission-flow" aria-label="Relación entre usuario, grupo, permiso y carpeta">
+        <span><strong>Usuario</strong><br><small>una persona con cuenta</small></span><b>→</b>
+        <span><strong>Grupo</strong><br><small>personas con una función común</small></span><b>→</b>
+        <span><strong>Permiso</strong><br><small>ver, editar o no acceder</small></span><b>→</b>
+        <span><strong>Carpeta</strong><br><small>información del evento</small></span>
+      </div>
+      <div class="roles-grid">
+        <article><h3>Usuario</h3><p>Es una cuenta individual. Sirve para saber quién ha accedido o modificado algo.</p></article>
+        <article><h3>Grupo</h3><p>Reúne cuentas con la misma tarea. Así no hay que compartir cada carpeta una por una.</p></article>
+        <article><h3>Permiso</h3><p>Indica qué puede hacer un grupo: consultar, editar, compartir o no acceder.</p></article>
+      </div>
+    </section>
+
+    <section class="theory-block plan-section">
+      <div class="block-label">Antes de tocar la configuración</div>
+      <h2>Diseña la organización en un minuto</h2>
+      <p>Primero piensa qué necesita cada equipo para trabajar. Aplicaremos el principio de <strong>mínimo privilegio</strong>: cada grupo recibe solo el acceso imprescindible para cumplir su función.</p>
+      <div class="team-map">
+        <article class="team-card organisation"><h3>Organización</h3><p>Coordina el evento y gestiona datos internos.</p><ul><li>Puede editar Programa.</li><li>Puede editar Documentación interna.</li><li>Gestiona Inscripciones.</li></ul></article>
+        <article class="team-card communication"><h3>Comunicación</h3><p>Prepara y publica los materiales informativos.</p><ul><li>Edita Cartelería.</li><li>Puede editar Programa.</li><li>Solo consulta Documentación interna.</li></ul></article>
+        <article class="team-card guest"><h3>Invitado</h3><p>Cuenta de prueba para comprobar que no recibe accesos por error.</p><ul><li>No pertenece a ningún grupo.</li><li>No debe ver las carpetas internas.</li></ul></article>
+      </div>
+      <p class="source-note">No compartas carpetas con el usuario <code>invitado</code>. Su utilidad es comprobar que los permisos se aplican correctamente.</p>
+    </section>
+
+    <section class="exercise-block">
+      <div class="block-label">Paso 3 · usuarios y grupos</div>
+      <h2>Crea el equipo del evento</h2>
+      <p class="step-intro"><strong>Qué vas a conseguir:</strong> dos grupos de trabajo y tres cuentas de prueba. Al usar grupos, el permiso se asigna una vez al grupo y llega automáticamente a sus miembros.</p>
+
+      <div class="action-list">
+        <article><span>1</span><div><h3>Abre la administración</h3><p>Inicia sesión con la cuenta administradora. Abre el menú de perfil y entra en <strong>Usuarios</strong>.</p></div></article>
+        <article><span>2</span><div><h3>Crea los grupos</h3><p>Crea <strong>Organización</strong> y <strong>Comunicación</strong>. Son los equipos que compartirán recursos.</p></div></article>
+        <article><span>3</span><div><h3>Crea las cuentas</h3><p>Crea <code>organizacion</code>, <code>comunicacion</code> e <code>invitado</code>. Utiliza contraseñas de prueba y no las muestres en las evidencias.</p></div></article>
+        <article><span>4</span><div><h3>Asigna los grupos</h3><p>Añade <code>organizacion</code> a Organización y <code>comunicacion</code> a Comunicación. Deja <code>invitado</code> sin grupo.</p></div></article>
+      </div>
+
+      <div class="evidence-callout">
+        <h3>Qué debes demostrar</h3>
+        <p>Incluye una captura de la lista de usuarios y grupos. Debajo, explica con tus palabras por qué se usa un grupo en vez de compartir las carpetas directamente con cada persona.</p>
+      </div>
+    </section>
+
+    <section class="exercise-block">
+      <div class="block-label">Paso 4 · carpetas y permisos</div>
+      <h2>Organiza los archivos y limita el acceso</h2>
+      <p class="step-intro"><strong>Qué vas a conseguir:</strong> una estructura clara de carpetas donde cada grupo puede trabajar sin acceder a información que no necesita.</p>
+
+      <p>Inicia sesión como <code>organizacion</code>. Crea la carpeta principal <code>Evento</code> y estas cuatro subcarpetas:</p>
+      <div class="folder-tree" aria-label="Árbol de carpetas del evento">
+        <div class="root-folder">📁 Evento</div>
+        <div class="folder-children"><span>📁 Cartelería</span><span>📁 Programa</span><span>📁 Documentación interna</span><span>📁 Inscripciones</span></div>
+      </div>
+
+      <h3 class="permission-heading">Aplica esta matriz de permisos</h3>
+      <div class="permission-table-wrap">
+        <table class="permission-table">
+          <thead><tr><th>Carpeta</th><th>Organización</th><th>Comunicación</th><th>Motivo</th></tr></thead>
+          <tbody>
+            <tr><td><strong>Cartelería</strong></td><td><span class="access view">Consultar</span></td><td><span class="access edit">Editar</span></td><td>Comunicación prepara los materiales; Organización puede revisarlos.</td></tr>
+            <tr><td><strong>Programa</strong></td><td><span class="access edit">Editar</span></td><td><span class="access edit">Editar</span></td><td>Ambos equipos necesitan actualizar la información.</td></tr>
+            <tr><td><strong>Documentación interna</strong></td><td><span class="access edit">Editar</span></td><td><span class="access view">Consultar</span></td><td>Organización la gestiona; Comunicación puede consultarla.</td></tr>
+            <tr><td><strong>Inscripciones</strong></td><td><span class="access edit">Editar</span></td><td><span class="access none">Sin acceso</span></td><td>Contiene información que no necesita Comunicación.</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="action-list compact-list">
+        <article><span>1</span><div><h3>Comparte con grupos, no con personas</h3><p>Desde el icono de compartir de cada carpeta, busca el grupo correspondiente y activa solo el permiso indicado en la tabla.</p></div></article>
+        <article><span>2</span><div><h3>Comprueba los permisos</h3><p>Abre una ventana privada o cierra sesión. Entra como <code>comunicacion</code> y demuestra un acceso permitido y otro denegado.</p></div></article>
+        <article><span>3</span><div><h3>Haz la prueba de seguridad</h3><p>Entra como <code>invitado</code>. No debe aparecerle ninguna de las carpetas compartidas del evento.</p></div></article>
+      </div>
+
+      <div class="evidence-callout">
+        <h3>Qué debes demostrar</h3>
+        <p>Incluye: el árbol de carpetas, una pantalla de compartición configurada, una prueba permitida y una prueba denegada. Explica por qué <code>Inscripciones</code> no se comparte con Comunicación.</p>
+      </div>
+    </section>
+
+    <section class="delivery-block">
+      <div class="block-label">Lista de comprobación</div>
+      <h2>Antes de continuar</h2>
+      <ul class="checklist">
+        <li><code>organizacion</code> y <code>comunicacion</code> pertenecen al grupo correcto.</li>
+        <li>Ambos grupos pueden editar <code>Programa</code>.</li>
+        <li>Comunicación no puede abrir <code>Inscripciones</code>.</li>
+        <li><code>invitado</code> no ve ninguna carpeta del evento.</li>
+      </ul>
+      <a class="button" href="pt2-2-colaboracion.html">Continuar con la colaboración →</a>
+    </section>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>

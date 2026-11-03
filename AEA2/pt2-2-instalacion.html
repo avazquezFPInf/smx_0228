@@ -1,0 +1,84 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>01 Instalación | AEA 2</title>
+  <link rel="stylesheet" href="../css/styles.css">
+</head>
+<body>
+  <main>
+    <a class="back-link" href="pt2-2.html">← Volver a Nextcloud</a>
+    <header class="page-header compact">
+      <p class="eyebrow">Pt2.2 · Nextcloud</p>
+      <h1>01 Instalación</h1>
+      <p class="lead">Prepara Ubuntu y monta el servicio que utilizará Nextcloud.</p>
+    </header>
+    <section class="theory-block">
+  <div class="block-label">Antes de instalar</div>
+  <h2>Qué vamos a montar</h2>
+  <p>En esta parte prepararemos los cuatro elementos que hacen funcionar Nextcloud. Apache recibe las peticiones del navegador; PHP ejecuta Nextcloud; MariaDB almacena los datos de la aplicación; y la carpeta de datos conserva los archivos.</p>
+  <div class="stack-list"><span>1. Ubuntu</span><span>2. Apache y PHP</span><span>3. MariaDB</span><span>4. Nextcloud</span></div>
+</section>
+
+<section class="exercise-block">
+  <div class="block-label">Paso 1</div>
+  <h2>Prepara Ubuntu y los servicios</h2>
+  <p class="step-intro"><strong>Ahora vas a hacer:</strong> instalar el servidor web, la base de datos y las extensiones de PHP que necesita Nextcloud. Al terminar comprobarás que Apache responde en el navegador.</p>
+  <ol>
+    <li>Actualiza los paquetes del sistema.</li>
+    <li>Instala Apache, MariaDB, PHP y los módulos necesarios.</li>
+    <li>Activa los servicios y abre <code>http://localhost</code>.</li>
+  </ol>
+  <section class="code-block"><div class="block-label">Terminal</div><pre><code>sudo apt update
+sudo apt install apache2 mariadb-server libapache2-mod-php php-mysql php-gd php-curl php-zip php-xml php-mbstring php-intl php-bcmath unzip wget -y
+sudo systemctl enable --now apache2 mariadb</code></pre></section>
+  <p><strong>En el documento:</strong> añade una captura de <code>http://localhost</code> y explica, con tus palabras, qué función tiene Apache, PHP y MariaDB.</p>
+</section>
+
+<section class="exercise-block">
+  <div class="block-label">Paso 2</div>
+  <h2>Crea la base de datos e instala Nextcloud</h2>
+  <p class="step-intro"><strong>Ahora vas a hacer:</strong> crear una base de datos vacía y un usuario exclusivo para Nextcloud, colocar la aplicación en el servidor y preparar Apache para que pueda aplicar sus reglas de acceso.</p>
+  <div class="responsibility-grid">
+    <article><h3>Lo creas tú</h3><p>Una base de datos vacía llamada <code>nextcloud</code> y el usuario <code>ncadmin</code>, con permiso para usar solo esa base de datos.</p></article>
+    <article><h3>Lo crea Nextcloud</h3><p>Sus propias tablas y su estructura interna, automáticamente al terminar el asistente. <strong>No debes escribir ningún comando <code>CREATE TABLE</code>.</strong></p></article>
+  </div>
+  <ol>
+    <li>Crea la base de datos vacía <code>nextcloud</code> y el usuario <code>ncadmin</code>. No crees tablas manualmente.</li>
+    <li>Descarga Nextcloud, colócalo en <code>/var/www/</code> y prepara la carpeta de datos.</li>
+    <li>Activa la configuración y los módulos de Apache.</li>
+    <li>Abre <code>http://localhost/nextcloud</code> y completa el asistente.</li>
+  </ol>
+  <section class="code-block"><div class="block-label">Terminal · base de datos</div><pre><code>sudo mysql
+-- Solo creamos una base vacía y un usuario. Nextcloud creará sus tablas.
+CREATE DATABASE nextcloud CHARACTER SET utf8mb4 COLLATE utf8mb4_general_ci;
+CREATE USER 'ncadmin'@'localhost' IDENTIFIED BY 'TU_CONTRASENA_SEGURA';
+GRANT ALL PRIVILEGES ON nextcloud.* TO 'ncadmin'@'localhost';
+FLUSH PRIVILEGES;
+EXIT;</code></pre></section>
+  <section class="code-block"><div class="block-label">Terminal · archivos y Apache</div><pre><code>cd /tmp
+wget https://download.nextcloud.com/server/releases/latest.zip
+unzip latest.zip
+sudo mv nextcloud /var/www/
+sudo chown -R www-data:www-data /var/www/nextcloud
+sudo install -d -o www-data -g www-data /var/ncdata
+sudo tee /etc/apache2/conf-available/nextcloud.conf &gt;/dev/null &lt;&lt;'EOF'
+&lt;Directory /var/www/nextcloud/&gt;
+  Require all granted
+  AllowOverride All
+  Options FollowSymLinks MultiViews
+&lt;/Directory&gt;
+EOF
+sudo a2enmod rewrite headers env dir mime
+sudo a2enconf nextcloud
+sudo systemctl restart apache2</code></pre></section>
+  <p>En el asistente selecciona <code>/var/ncdata</code> como carpeta de datos. Indica la base <code>nextcloud</code> y el usuario <code>ncadmin</code>. No muestres contraseñas en ninguna captura. Al pulsar instalar, Nextcloud crea automáticamente sus tablas: esa tarea pertenece a la aplicación, no a ti.</p>
+  <p><strong>En el documento:</strong> captura de la pantalla principal de Nextcloud y una explicación de los datos configurados.</p>
+</section>
+
+<section class="delivery-block"><div class="block-label">Comprueba</div><h2>Antes de continuar</h2><p>Debes poder entrar en Nextcloud con el usuario administrador en <code>http://localhost/nextcloud</code>. Si aparece una incidencia, anótala y explica cómo la has resuelto.</p><a class="button" href="pt2-2-organizacion.html">Continuar con la organización →</a></section>
+  </main>
+  <script src="../js/main.js"></script>
+</body>
+</html>
