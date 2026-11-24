@@ -46,7 +46,7 @@ sudo systemctl enable --now apache2 mariadb</code></pre></section>
   </div>
   <ol>
     <li>Crea la base de datos vacía <code>nextcloud</code> y el usuario <code>ncadmin</code>. No crees tablas manualmente.</li>
-    <li>Descarga Nextcloud, colócalo en <code>/var/www/</code> y prepara la carpeta de datos.</li>
+    <li>Descarga Nextcloud, colócalo en <code>/var/www/html</code> y prepara la carpeta de datos.</li>
     <li>Activa la configuración y los módulos de Apache.</li>
     <li>Abre <code>http://localhost/nextcloud</code> y completa el asistente.</li>
   </ol>
@@ -60,11 +60,11 @@ EXIT;</code></pre></section>
   <section class="code-block"><div class="block-label">Terminal · archivos y Apache</div><pre><code>cd /tmp
 wget https://download.nextcloud.com/server/releases/latest.zip
 unzip latest.zip
-sudo mv nextcloud /var/www/
-sudo chown -R www-data:www-data /var/www/nextcloud
+sudo mv nextcloud /var/www/html/
+sudo chown -R www-data:www-data /var/www/html/nextcloud
 sudo install -d -o www-data -g www-data /var/ncdata
 sudo tee /etc/apache2/conf-available/nextcloud.conf &gt;/dev/null &lt;&lt;'EOF'
-&lt;Directory /var/www/nextcloud/&gt;
+&lt;Directory /var/www/html/nextcloud/&gt;
   Require all granted
   AllowOverride All
   Options FollowSymLinks MultiViews
